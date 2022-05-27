@@ -39,21 +39,21 @@ public class PalindromeDetector {
         if (str == null || str.length() == 0) return;
 
         for (int i = 0 ; i < str.length() ; i++){
-            String oddString = expandWindow(str, i, i);
-            String evenString = expandWindow(str, i, i+1);
+            expandWindow(str, i, i); //odd
+            expandWindow(str, i, i+1); //even
         }
         
-        System.out.println(palindromes);
+        System.out.println("palindromes: "+ palindromes);
         return;
     }
    
-    public static String expandWindow(String str, int left, int right){
+    public static void expandWindow(String str, int left, int right){
         /** 
          * Expands the left right markers (window) boundaries over the string.
          * Returns the Palindrome found.
          */
         if (str == null || left > right){
-            return "";
+            return;
         }
 
         while (left >= 0 && right < str.length() 
@@ -73,8 +73,6 @@ public class PalindromeDetector {
 
         if (isAlphaNumeric(palindrome)){
                 
-            // char leftNeighbor = left == 0 ? ' ' : str.charAt(left);
-            // char rightNeighbor = right == str.length() -1 ?  ' ' : str.charAt(right);
             char leftNeighbor = str.charAt(left);
             char rightNeighbor = str.charAt(right);
             
@@ -85,7 +83,7 @@ public class PalindromeDetector {
             
         }
          
-        return palindrome; 
+        return; 
     }
 
     public static boolean isAlphaNumeric(String str){
