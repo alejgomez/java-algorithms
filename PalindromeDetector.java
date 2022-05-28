@@ -39,12 +39,12 @@ public class PalindromeDetector {
 
     public static void main(String[] args) throws Exception {
 
-        final String fileName = args.length > 0 ? args[0] : "./input2.txt";
-        System.out.print("Reading from file " + fileName + "\n");
+        final String fileName = args.length > 0 ? args[0] : "./input.txt";
         String inputString = readFile(fileName);
+        System.out.print("Reading from file " + fileName + "\n");
 
         inputString = inputString.toLowerCase();
-        inputString = inputString.replaceAll("[^a-zA-Z0-9]"," "); //non alphanumeric becomes space
+        inputString = inputString.replaceAll("[^a-zA-Z0-9]"," ");
         inputString = " " + inputString + " ";
 
         System.out.println("InputString: " + inputString + "\n");
@@ -61,17 +61,12 @@ public class PalindromeDetector {
             expandWindow(str, i, i+1); //even
         }
 
-        //original
-        palindromesList.forEach((p)->{
-            System.out.println(p.text + " --> " + p.count);
-        });
-
         //sorting
         palindromesList.sort(Comparator.comparing(Palindrome::getCount).reversed().thenComparing(Palindrome::getText));
 
-        System.out.println("Sorted \n");
+        System.out.println("Found Palindromes:");
         palindromesList.forEach((p)->{
-            System.out.println(p.text + " --> " + p.count);
+            System.out.println(p.text + " > " + p.count);
         });
   
         return;
@@ -80,7 +75,7 @@ public class PalindromeDetector {
     public static void expandWindow(String str, int left, int right){
         /** 
          * Expands the left right markers (window) boundaries over the string
-         * to detect palindrom
+         * to detect palindrome
          */
         if (str == null || left > right){
             return;
@@ -142,7 +137,7 @@ public class PalindromeDetector {
 
         return str.matches("^[a-zA-Z0-9]+$")
         ? true
-        : false; //alphanumeric
+        : false;
     
     }
     
