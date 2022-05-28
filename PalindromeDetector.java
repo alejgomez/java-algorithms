@@ -16,7 +16,7 @@
  */
 import java.nio.file.*;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Comparator;
 
 class Palindrome{
     String text;
@@ -26,19 +26,23 @@ class Palindrome{
         this.text = text;
         this.count = count;
     }
+    public String getText() {
+        return text;
+    }
+    public int getCount() {
+        return count;
+    }
 }
 public class PalindromeDetector {
 
-    // public static ArrayList<String> palindromes = new ArrayList<String>();
-    // public static ArrayList<Integer> palindromesCount = new ArrayList<Integer>();
     public static ArrayList<Palindrome> palindromesList = new ArrayList<Palindrome>();
 
     public static void main(String[] args) throws Exception {
 
         final String fileName = args.length > 0 ? args[0] : "./input2.txt";
         System.out.print("Reading from file " + fileName + "\n");
-
         String inputString = readFile(fileName);
+
         inputString = inputString.toLowerCase();
         inputString = inputString.replaceAll("[^a-zA-Z0-9]"," "); //non alphanumeric becomes space
         inputString = " " + inputString + " ";
@@ -56,31 +60,22 @@ public class PalindromeDetector {
             expandWindow(str, i, i); //odd
             expandWindow(str, i, i+1); //even
         }
-        
-        // System.out.println("palindromes: "+ palindromes);
-        // System.out.println("Count: "+ palindromesCount);
 
+        //original
+        palindromesList.forEach((p)->{
+            System.out.println(p.text + " --> " + p.count);
+        });
+
+        //sorting
+        palindromesList.sort(Comparator.comparing(Palindrome::getCount).reversed().thenComparing(Palindrome::getText));
+
+        System.out.println("Sorted \n");
         palindromesList.forEach((p)->{
             System.out.println(p.text + " --> " + p.count);
         });
   
         return;
     }
-    /*
-    private static void printSortedPalindromes() {
-        int size = palindromes.size();
-        Palindrome array[] = new Palindrome[size];
-
-        System.out.println("Sorted");
-        for (int i = 0; i < size; i++){
-            array[i] = new Palindrome(palindromes.get(i), palindromesCount.get(i));
-            System.out.println(array[i].text + " --> " + array[i].count );
-        }
-        
-        // Collections.sort(palindromesCount);
-        // System.out.println("Sorted Count: "+ palindromesCount);
-    }
-    */
    
     public static void expandWindow(String str, int left, int right){
         /** 
@@ -105,30 +100,7 @@ public class PalindromeDetector {
         
         return; 
     }
-    /*
-    private static void extractPalindrome(String str, int left, int right) {
-        String palindrome = str.substring(left, right+1);
-        palindrome = palindrome.trim(); 
-
-        if (isAlphaNumeric(palindrome)){
-                
-            char leftNeighbor = str.charAt(left);
-            char rightNeighbor = str.charAt(right);
-            
-            if (!isAlphaNumeric(String.valueOf(leftNeighbor)) 
-            && !isAlphaNumeric(String.valueOf(rightNeighbor)) ){
-                
-                int index = palindromes.indexOf(palindrome);
-                if (index >=0) {
-                    palindromesCount.set(index, palindromesCount.get(index) + 1);
-                }else{
-                    palindromes.add(palindrome);
-                    palindromesCount.add(1);
-                }
-            }
-        }
-    }
-    */
+  
     private static void extractPalindrome(String str, int left, int right) {
         String text = str.substring(left, right+1);
         text = text.trim(); 
