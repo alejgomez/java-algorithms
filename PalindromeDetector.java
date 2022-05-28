@@ -11,6 +11,7 @@
  *  -Single or multiple letter substrings of a word. "door" "oo" is not a palindrome
  * 
  * There are two cases to handle, an even and odd word:
+ * For the two cases we place a left and right marker and expand until finding a palindrome
  * 1) aabbcc  even case
  * 2) amerema odd  case
  */
