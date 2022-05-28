@@ -53,7 +53,7 @@ public class PalindromeDetector {
 
     }
 
-    public static void printAllPalindromes(String str) {
+    private static void printAllPalindromes(String str) {
 
         if (str == null || str.length() == 0) return;
 
@@ -73,7 +73,7 @@ public class PalindromeDetector {
         return;
     }
    
-    public static void expandWindow(String str, int left, int right){
+    private static void expandWindow(String str, int left, int right){
         /** 
          * Expands the left right markers (window) boundaries over the string
          * to detect palindrome
@@ -133,7 +133,7 @@ public class PalindromeDetector {
         return -1;
     }
 
-    public static boolean isAlphaNumeric(String str){
+    private static boolean isAlphaNumeric(String str){
         if (str == null)  return false; 
 
         return str.matches("^[a-zA-Z0-9]+$")
@@ -142,7 +142,7 @@ public class PalindromeDetector {
     
     }
     
-    public static String readFile(String fileName)throws Exception
+    private static String readFile(String fileName)throws Exception
     {
       String data = "";
       data = new String(Files.readAllBytes(Paths.get(fileName)));
