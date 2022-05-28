@@ -17,14 +17,16 @@
  */
 import java.nio.file.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class PalindromeDetector {
 
     public static ArrayList<String> palindromes = new ArrayList<String>();
+    public static ArrayList<Integer> palindromesCount = new ArrayList<Integer>();
 
     public static void main(String[] args) throws Exception {
 
-        String inputString = readFile("./input.txt");
+        String inputString = readFile("./input2.txt");
         inputString = inputString.toLowerCase();
         inputString = inputString.replaceAll("[^a-zA-Z0-9]"," "); //non alphanumeric becomes space
         inputString = " " + inputString + " ";
@@ -44,13 +46,21 @@ public class PalindromeDetector {
         }
         
         System.out.println("palindromes: "+ palindromes);
+        System.out.println("Count: "+ palindromesCount);
+        printSortedPalindromes();
         return;
+    }
+
+    private static void printSortedPalindromes() {
+         
+        Collections.sort(palindromesCount);
+        System.out.println("Sorted Count: "+ palindromesCount.get(0));
     }
    
     public static void expandWindow(String str, int left, int right){
         /** 
-         * Expands the left right markers (window) boundaries over the string.
-         * Returns the Palindrome found.
+         * Expands the left right markers (window) boundaries over the string
+         * to detect palindrom
          */
         if (str == null || left > right){
             return;
@@ -66,9 +76,14 @@ public class PalindromeDetector {
         left ++; 
         right--;
 
-        String palindrome = str.substring(left, right+1);
+        extractPalindrome(str, left, right);
+        
 
-        //no white spaces
+        return; 
+    }
+
+    private static void extractPalindrome(String str, int left, int right) {
+        String palindrome = str.substring(left, right+1);
         palindrome = palindrome.trim(); 
 
         if (isAlphaNumeric(palindrome)){
@@ -78,12 +93,18 @@ public class PalindromeDetector {
             
             if (!isAlphaNumeric(String.valueOf(leftNeighbor)) 
             && !isAlphaNumeric(String.valueOf(rightNeighbor)) ){
-                palindromes.add(palindrome);
+                
+                int index = palindromes.indexOf(palindrome);
+                if (index >=0) {
+                    palindromesCount.set(index, palindromesCount.get(index) + 1);
+                }else{
+                    palindromes.add(palindrome);
+                    palindromesCount.add(1);
+                }
+                
             }
             
         }
-         
-        return; 
     }
 
     public static boolean isAlphaNumeric(String str){
